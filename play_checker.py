@@ -29,6 +29,7 @@ if __name__ == "__main__":
         player, board = state
         show_board(state)
         if player == 1:
+            print("--- Player's turn --->")
             action = get_user_action(state)
             state = play_turn(action, board)
         else:
