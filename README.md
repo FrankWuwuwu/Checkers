@@ -7,7 +7,7 @@ We are implementing checkers with a rule modification and train AI for the game.
 
 We will use **MTCS** and **CNN** to train AI for this project.
 
-**Rule modification: each turn, there is a 10% chance that a player's piece automatically teleports to a random nearby location.**
+**Rule modification: each turn, there is a 10% chance that a player's piece automatically teleports to a random nearby location. This wil always happened after player make their move.**
 
 Currently, only the domain of the game is implemented.
 
