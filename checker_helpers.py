@@ -1,6 +1,7 @@
 ####code by Kefu Wu 580824208 11/30/2021
 
 import numpy as np
+import random
 import matplotlib.pyplot as pt
 
 def initial_state(board_size) -> tuple:
@@ -118,6 +119,12 @@ def play_turn(move: tuple, board: list) -> tuple:
     if action==0:
         board[start]=0
         board[end]=player
+        
+        # A 10% random transfer will happened after finish all his move
+        if (random.choice(range(10))==1):
+            new_state=random_transfer((player,board))
+            player, board=new_state
+        
         return (rival,board)
     if action==1:
         board[start]=0
@@ -135,9 +142,69 @@ def play_turn(move: tuple, board: list) -> tuple:
         #print(valid)
         #print(jump)
         if jump==[]:
+            
+            # A 10% random transfer will happened after finish all his move
+            if (random.choice(range(10))==1):
+                new_state=random_transfer((player,board))
+                player, board=new_state
+                
             return (rival,board)
         else:
             return (player,board)
+
+def random_transfer(state: tuple):
+    (player, board)=state
+    print("Opps! A random transfer happened. ")
+    print("One of your piece automatically teleports to a random nearby location.")
+    
+    
+    # find all piece of current player
+    avaliable_checkers=[]
+    board_size= len(board)
+    for x in range(board_size):
+        for y in range(board_size):
+            if board[x,y]==player:
+                avaliable_checkers.append((x,y))
+    if avaliable_checkers==[]:
+        print("No checker avaliable. Skip transfer.")
+        return (player, board)
+    #target_checker=random.choice(avaliable_checkers)
+    
+    
+    # check all avaliable moves to nearby location
+    valid=[]
+    for target_checker in avaliable_checkers:
+        r,c = target_checker
+        if r-1>=0 and c-1>=0:
+            if board[r-1,c-1]==0:
+                valid.append(((r,c),(r-1,c-1)))
+        if r-1>=0 and c+1<=board_size-1:
+            if board[r-1,c+1]==0:
+                valid.append(((r,c),(r-1,c+1)))
+            
+        if r+1<=board_size-1 and c-1>=0:
+            if board[r+1,c-1]==0:
+                valid.append(((r,c),(r+1,c-1)))
+        if r+1<=board_size-1 and c+1<=board_size-1:
+            if board[r+1,c+1]==0:
+                valid.append(((r,c),(r+1,c+1)))
+            
+            
+    # randomly choose a nearby location
+    if valid==[]:
+        print("No transfer avaliable for checker ",target_checker,". Skip transfer.")
+        return (player, board)
+    action=random.choice(valid)
+
+    # make move
+    (xs,ys),(xe,ye)= action
+    #print("valid choice:", valid)
+    print("Your piece at (",xs,",",ys,") teleports to (",xe,",",ye,")")
+    board[xs, ys]=0
+    board[xe, ye]=player
+    return (player, board)
+    
+
 
 def check_winner(board):
     player1_count=0
