@@ -23,7 +23,19 @@ def get_user_action(state):
 
 if __name__ == "__main__":
 
-    state = initial_state(4)
+    while True:
+        try:
+            question = int(input('Please enter an integer for the board size(e.g 8 for 8*8 game):'))
+            if question<30:
+                break
+            else:
+                print("board size larger than 30*30 is not supported.")
+                continue
+        except:
+            print("Invalid input, please enter an integer!")
+    
+    
+    state = initial_state(question)
     while not game_over(state):
 
         player, board = state

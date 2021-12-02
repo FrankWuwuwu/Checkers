@@ -8,7 +8,10 @@ def initial_state(board_size) -> tuple:
     # player 1 and player 2, 0 means empty, -1 means not-reachable spot
     # 3 means king checker of player 1
     # 4 means king checker of player 2
-    player=1
+    
+    # choose a starter randomly 
+    player=random.choice(range(1,3))
+    
     if (board_size<=4):
         board_size=6
         print("The minimal board size is 6! new board size: ", board_size,"*",board_size)
@@ -16,6 +19,8 @@ def initial_state(board_size) -> tuple:
     if (board_size%2)>0:
         board_size+=1
         print("board size must be even! new board size: ", board_size,"*",board_size)
+    
+    #print("A ",board_size,"*",board_size," game.")
     
     # init board
     num_rows, num_cols = board_size, board_size
@@ -35,6 +40,8 @@ def initial_state(board_size) -> tuple:
             if x>=((board_size/2) +1):
                 if board[x,y]!=-1:
                     board[x,y]=1
+    print("player",player,"go first.")
+    
     return (player, board)
 
 
