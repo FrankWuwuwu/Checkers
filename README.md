@@ -1,10 +1,7 @@
 # Introduction
 This is the Group project of CIS 667 AI class.
 
-Group members:
-  Kefu Wu, 
-  Shuangding Zhu,  
-  Jiayu Ding
+Group members:  Kefu Wu,  Shuangding Zhu,  Jiayu Ding
 
 We are implementing checkers with a rule modification and train AI for the game.
 
@@ -41,4 +38,5 @@ python play_checker.py
 
 # How to run experiment
 We will use MTCS and CNN to train AI for checker.
+
 Will be update soon.
