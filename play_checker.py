@@ -23,6 +23,7 @@ def get_user_action(state):
 
 if __name__ == "__main__":
 
+    # get game size
     while True:
         try:
             question = int(input('Please enter an integer for the board size(e.g 8 for 8*8 game):'))
@@ -36,17 +37,77 @@ if __name__ == "__main__":
     
     
     state = initial_state(question)
+    
+    # choice two player
+    choice=0
+    while True:
+        try:
+            print("Please choose the control for Player 1 (enter index).")
+            print("1. human")
+            print("2. baseline AI")
+            print("3. Tree-based AI")
+            print("4. Tree+NN AI")
+            choice = int(input("You choice:"))
+            if choice in range(1,5):
+                break
+            else:
+                print("no this choice")
+                continue
+        except:
+            print("Invalid input, please enter an integer!")
+    player_1= choice
+    choice=0
+    while True:
+        try:
+            print("Please choose the control for Player 2 (enter index).")
+            print("1. human")
+            print("2. baseline AI")
+            print("3. Tree-based AI")
+            print("4. Tree+NN AI")
+            choice = int(input("You choice:"))
+            if choice in range(1,5):
+                break
+            else:
+                print("no this choice")
+                continue
+        except:
+            print("Invalid input, please enter an integer!")
+    player_2= choice
+    
+    state = initial_state(question)
+    
     while not game_over(state):
 
         player, board = state
         show_board(state)
         if player == 1:
-            print("--- Player's turn --->")
-            action = get_user_action(state)
+            print("--- Player 1's turn --->")
+            if (player_1==1):
+                action = get_user_action(state)
+            elif (player_1==2):
+                action = simple_AI(state)
+            elif (player_1==3):
+                action = simple_AI(state)# replace here
+            elif (player_1==4):
+                action = simple_AI(state)# replace here
+            else:
+                print("player error")
+                exit()
             state = play_turn(action, board)
         else:
-            print("--- AI's turn --->")
-            action = simple_AI(state)
+            print("--- Player 2's turn --->")
+            if (player_2==1):
+                action = get_user_action(state)
+            elif (player_2==2):
+                action = simple_AI(state)
+            elif (player_2==3):
+                action = simple_AI(state)# replace here
+            elif (player_2==4):
+                action = simple_AI(state)# replace here
+            else:
+                print("player error")
+                exit()
+            
             state= play_turn(action, board)
     
     #player, board = state
