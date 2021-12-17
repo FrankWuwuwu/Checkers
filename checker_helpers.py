@@ -123,23 +123,25 @@ def play_turn(move: tuple, board: list) -> tuple:
     if (player==2):
         rival=1
     
+    new_board=board.copy()
+    
     if action==0:
-        board[start]=0
-        board[end]=player
+        new_board[start]=0
+        new_board[end]=player
         
         # A 10% random transfer will happened after finish all his move
         if (random.choice(range(10))==1):
-            new_state=random_transfer((player,board))
-            player, board=new_state
+            new_state=random_transfer((player,new_board))
+            player, new_board=new_state
         
-        return (rival,board)
+        return (rival,new_board)
     if action==1:
-        board[start]=0
-        board[end]=player
+        new_board[start]=0
+        new_board[end]=player
         xs, ys = start
         xe, ye = end
-        board[int((xs+xe)/2),int((ys+ye)/2)]=0
-        state= player, board
+        new_board[int((xs+xe)/2),int((ys+ye)/2)]=0
+        state= player, new_board
         valid=valid_actions(state)
         jump=[]
         for item in valid:
@@ -152,12 +154,50 @@ def play_turn(move: tuple, board: list) -> tuple:
             
             # A 10% random transfer will happened after finish all his move
             if (random.choice(range(10))==1):
-                new_state=random_transfer((player,board))
-                player, board=new_state
+                new_state=random_transfer((player,new_board))
+                player, new_board=new_state
                 
-            return (rival,board)
+            return (rival,new_board)
         else:
-            return (player,board)
+            return (player,new_board)
+
+# a simulation function of play term, without random transfer,
+# serve for MCTS simulation
+def simu_turn(move: tuple, board: list) -> tuple:
+    action, start, end= move
+    
+    # check who is moving
+    player=board[start]
+    if (player==1):
+        rival=2
+    if (player==2):
+        rival=1
+    
+    new_board=board.copy()
+    
+    if action==0:
+        new_board[start]=0
+        new_board[end]=player
+        return (rival,new_board)
+    if action==1:
+        new_board[start]=0
+        new_board[end]=player
+        xs, ys = start
+        xe, ye = end
+        new_board[int((xs+xe)/2),int((ys+ye)/2)]=0
+        state= player, new_board
+        valid=valid_actions(state)
+        jump=[]
+        for item in valid:
+            new_action, new_start, new_end= item
+            if new_action==1:
+                jump.append(item)
+        #print(valid)
+        #print(jump)
+        if jump==[]:
+            return (rival,new_board)
+        else:
+            return (player,new_board)
 
 def random_transfer(state: tuple):
     (player, board)=state
@@ -225,10 +265,8 @@ def check_winner(board):
                 player2_count+=1
     if (player1_count==player2_count):
         return 0
-    if player1_count>player2_count:
-        return 1
     else:
-        return 2
+        return player1_count - player2_count
 
 
 # show the whole board to user

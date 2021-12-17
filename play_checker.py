@@ -1,5 +1,6 @@
 from checker_helpers import *
 from checker_AI import *
+from MCTS import *
 
 def get_user_action(state):
     actions = valid_actions(state)
@@ -87,7 +88,7 @@ if __name__ == "__main__":
             elif (player_1==2):
                 action = simple_AI(state)
             elif (player_1==3):
-                action = simple_AI(state)# replace here
+                action = MCTS_AI(state,500)
             elif (player_1==4):
                 action = simple_AI(state)# replace here
             else:
@@ -101,7 +102,7 @@ if __name__ == "__main__":
             elif (player_2==2):
                 action = simple_AI(state)
             elif (player_2==3):
-                action = simple_AI(state)# replace here
+                action = MCTS_AI(state,500)
             elif (player_2==4):
                 action = simple_AI(state)# replace here
             else:
@@ -115,6 +116,8 @@ if __name__ == "__main__":
     winner=check_winner(board)
     if winner==0:
         print("Game over, it is tied.")
+    elif winner>0:
+        print("Game over, player 1 wins.")
     else:
-        print("Game over, player %d wins." % winner)
+        print("Game over, player 2 wins.")
 
