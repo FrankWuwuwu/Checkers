@@ -63,7 +63,7 @@ class ConvNet(tr.nn.Module):
 def batch_error(net, batch):
     states, utilities = batch
     u = utilities.reshape(-1,1).float()
-    y = net(states)
+    y = net(states.float())
     # Meam square error
     e = tr.sum((y - u)**2) / utilities.shape[0]
     return e
@@ -73,15 +73,16 @@ if __name__ == "__main__":
 
 
     # Create CNN
-    net = ConvNet(inputlayer=1,boardsize=8,hid_features=4,kernel_size=3)
+    net = ConvNet(inputlayer=1,boardsize=8,hid_features=4,kernel_size=2)
     # in put board size and hidden features
-#   #net = ConvNet(size=8, hid_features=2)
+    #net = ConvNet(size=8, hid_features=8)
     #print(net)
     # Create Optimizer
+    net = net.float()
     optimizer = tr.optim.SGD(net.parameters(), lr=0.00001, momentum=0.9)
 
     # example/format of states and untilities  
-    states = [np.random.rand(1,8,8), np.random.rand(1,8,8).double()]
+    states = [np.random.rand(1,8,8), np.random.rand(1,8,8)]
     utilities = [0,1]
     # Convert the states and their  utilities to tensors
 #    states, utilities = zip(*training_examples)
