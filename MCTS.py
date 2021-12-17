@@ -84,7 +84,15 @@ def rollout(node):
     
 def get_action(node):
     make_move=decide_action(node)
-    print(make_move)
+    
+    #print(make_move)   
+    action_type, start, end= make_move
+    if action_type==0:
+        type_text="move"
+    if action_type==1:
+        type_text="jump"
+    print ("treebased AI action:",type_text,"the checker of",start,"to",end)
+    
     return make_move
 
 def MCTS_AI(state,rolltime):
@@ -96,15 +104,22 @@ def MCTS_AI(state,rolltime):
         #print(r, node.score_estimate)
     #print("choice")
     #print(node.tree_player)
-    return get_action(node)
+    
+    return get_action(node), checknode(node)
+
+def checknode(node):
+    num=len(node.child_list)
+    for item in node.child_list:
+        num+=checknode(item)
+    return num
 
 if __name__ == "__main__":
 
 
-    tree_player, board =initial_state(8)
+    tree_player, board =initial_state(14)
     # gauge sub-optimality with rollouts
     node = Node((tree_player,(tree_player,board)))
-    for r in range(1000): # TODO
+    for r in range(500): # TODO
         rollout(node)
         print(r, node.score_estimate)
     print("choice")

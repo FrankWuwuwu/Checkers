@@ -11,7 +11,7 @@ def simple_AI(state):
         type_text="move"
     if action_type==1:
         type_text="jump"
-    print ("AI action:",type_text,"the checker of",start,"to",end)
+    print ("baseline AI action:",type_text,"the checker of",start,"to",end)
     return action
 
 

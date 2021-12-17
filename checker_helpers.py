@@ -161,7 +161,7 @@ def play_turn(move: tuple, board: list) -> tuple:
         else:
             return (player,new_board)
 
-# a simulation function of play term, without random transfer,
+# a simulation function of play term, without random transfer
 # serve for MCTS simulation
 def simu_turn(move: tuple, board: list) -> tuple:
     action, start, end= move

@@ -6,7 +6,7 @@ def game(game_size):
     print("player 1---baseline AI")
     print("player 2---treebased AI")
     state = initial_state(game_size)
-    
+    node_count=0
     while not game_over(state):
 
         player, board = state
@@ -17,8 +17,8 @@ def game(game_size):
             state = play_turn(action, board)
         else:
             print("--- Player 2's turn --->")
-            action = MCTS_AI(state,500)
-            
+            action,node_num = MCTS_AI(state,500)
+            node_count+=node_num
             state= play_turn(action, board)
     
     #player, board = state
@@ -30,7 +30,7 @@ def game(game_size):
         print("Game over, player 1 wins.")
     else:
         print("Game over, player 2 wins.")
-    return winner
+    return winner,node_count
 
 
 
@@ -51,15 +51,17 @@ if __name__ == "__main__":
     player1_counter=0
     player2_counter=0
     tie_counter=0
+    node_count=0
     for i in range(100):
         print("The",i+1,"game.")
-        winner=game(question)
+        winner,node_count=game(question)
         if winner>0:
             player1_counter+=1
         elif winner==0:
             tie_counter+=1
         else:
             player2_counter+=1
+        print(node_count, "nodes produced by MCTS")
     print("100 game finished")
     print("player 1 wins",player1_counter,"game")
     print("player 2 wins",player2_counter,"game")

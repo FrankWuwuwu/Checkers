@@ -86,7 +86,7 @@ if __name__ == "__main__":
             elif (player_1==2):
                 action = simple_AI(state)
             elif (player_1==3):
-                action = MCTS_AI(state,500)
+                action,_ = MCTS_AI(state,500)
             elif (player_1==4):
                 action = simple_AI(state)# replace here
             else:
@@ -100,7 +100,7 @@ if __name__ == "__main__":
             elif (player_2==2):
                 action = simple_AI(state)
             elif (player_2==3):
-                action = MCTS_AI(state,500)
+                action,_ = MCTS_AI(state,500)
             elif (player_2==4):
                 action = simple_AI(state)# replace here
             else:
