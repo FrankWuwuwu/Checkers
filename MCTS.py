@@ -95,7 +95,7 @@ def MCTS_AI(state,rolltime):
         rollout(node)
         #print(r, node.score_estimate)
     #print("choice")
-    print(node.tree_player)
+    #print(node.tree_player)
     return get_action(node)
 
 if __name__ == "__main__":

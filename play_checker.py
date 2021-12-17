@@ -75,8 +75,6 @@ if __name__ == "__main__":
             print("Invalid input, please enter an integer!")
     player_2= choice
     
-    state = initial_state(question)
-    
     while not game_over(state):
 
         player, board = state
