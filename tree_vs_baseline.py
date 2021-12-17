@@ -109,6 +109,6 @@ if __name__ == "__main__":
     plt.xlabel('number_game')
     plt.ylabel('node_counts')
 
-    plt.title('game of 6 * 6')
+    plt.title('game of 8 * 8')
     plt.savefig('2.jpg')
     plt.show()
