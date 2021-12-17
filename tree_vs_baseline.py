@@ -1,6 +1,14 @@
+import numpy as np
+
 from checker_helpers import *
 from checker_AI import *
 from MCTS import *
+# -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+
+
+
 
 def game(game_size):
     print("player 1---baseline AI")
@@ -39,7 +47,7 @@ if __name__ == "__main__":
     # get game size
     while True:
         try:
-            question = int(input('Please enter an integer for the board size(e.g 8 for 8*8 game):'))
+            question = int(input('Please enter an integer for the board size(e.g 6 for 6*6 game):'))
             if question<30:
                 break
             else:
@@ -48,21 +56,59 @@ if __name__ == "__main__":
         except:
             print("Invalid input, please enter an integer!")
     
-    player1_counter=0
-    player2_counter=0
+
+    player1_score,player2_score = [], []
+    player1_counter = 0
+    player2_counter = 0
     tie_counter=0
     node_count=0
+    node = []
     for i in range(100):
         print("The",i+1,"game.")
         winner,node_count=game(question)
+        # player1_counter = 0
+        # player2_counter = 0
         if winner>0:
             player1_counter+=1
         elif winner==0:
             tie_counter+=1
         else:
             player2_counter+=1
+
+        player1_score.append(player1_counter)
+        player2_score.append(player2_counter)
+        node.append(node_count)
+
         print(node_count, "nodes produced by MCTS")
     print("100 game finished")
     print("player 1 wins",player1_counter,"game")
     print("player 2 wins",player2_counter,"game")
     print("Tie",tie_counter,"game")
+
+    x1 = np.linspace(1,199,100)
+    x2 = np.linspace(2,200,100)
+    plt.bar(x1, np.array(player1_score), label='baseline')
+    plt.bar(x2, np.array(player2_score), label='tree-based')
+
+    # plt.xlim((1,100))
+
+    plt.legend()
+
+    plt.xlabel('number_game')
+    plt.ylabel('score')
+
+    plt.title('game of 8 * 8')
+    plt.savefig('1.jpg')
+    plt.show()
+
+    x = np.linspace(1,100,100)
+    plt.bar(x, np.array(node), label='node_count')
+
+    plt.legend()
+
+    plt.xlabel('number_game')
+    plt.ylabel('node_counts')
+
+    plt.title('game of 6 * 6')
+    plt.savefig('2.jpg')
+    plt.show()
