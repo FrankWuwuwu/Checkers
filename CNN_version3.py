@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 17 05:04:16 2021
-
-@author: iamga
-"""
-
 # Create CNN and train it in this script
 import numpy as np
 import matplotlib.pyplot as pt

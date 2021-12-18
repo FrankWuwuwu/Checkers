@@ -24,7 +24,7 @@ def game(game_size):
             state = play_turn(action, board)
         else:
             print("--- Player 2's turn --->")
-            action,node_num = MCTS_AI(state,200)
+            action,node_num = MCTS_AI(state,500)
             node_count+=node_num
             state= play_turn(action, board)
     
@@ -42,20 +42,6 @@ def game(game_size):
 
 
 if __name__ == "__main__":
-
-    # get game size
-    while True:
-        try:
-            question = int(input('Please enter an integer for the board size(e.g 6 for 6*6 game):'))
-            if question<30:
-                break
-            else:
-                print("board size larger than 30*30 is not supported.")
-                continue
-        except:
-            print("Invalid input, please enter an integer!")
-    
-
     player1_score,player2_score = [], []
     player1_counter = 0
     player2_counter = 0
@@ -64,7 +50,7 @@ if __name__ == "__main__":
     node = []
     for i in range(100):
         print("The",i+1,"game.")
-        winner,node_count=game(question)
+        winner,node_count=game(6)
         # player1_counter = 0
         # player2_counter = 0
         if winner>0:
@@ -96,7 +82,7 @@ if __name__ == "__main__":
     plt.xlabel('number_game')
     plt.ylabel('score')
 
-    plt.title('game of 10 * 10')
+    plt.title('game of 6 * 6')
     plt.savefig('1.jpg')
     plt.show()
 
@@ -108,6 +94,6 @@ if __name__ == "__main__":
     plt.xlabel('number_game')
     plt.ylabel('node_counts')
 
-    plt.title('game of 10 * 10')
+    plt.title('game of 6 * 6')
     plt.savefig('2.jpg')
     plt.show()

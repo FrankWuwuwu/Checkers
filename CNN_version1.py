@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 17 05:04:16 2021
-
-@author: iamga
-"""
-
 # Create CNN and train it in this script
 import numpy as np
 import matplotlib.pyplot as pt
@@ -20,7 +13,7 @@ class ConvNet(tr.nn.Module):
         C_maxpool2d_2 = math.floor((C_out_con2d_2 - kernel_size)/kernel_size) + 1
         
         self.cnn_layers = tr.nn.Sequential(
-            # inputlayer should always be equal to 1, and output of linear layer should =1 since we only want the utility
+            # inputlayer should always be equal to 1, and output of linear layer should =1s since we only want the utility
              
             # Change struture of CNN here: including boardsize, hid_features, kernal size
             
