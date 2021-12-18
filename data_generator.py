@@ -6,7 +6,7 @@ from checker_AI import *
 from MCTS import *
 
 def get_child(node):
-    if node.visit_count<10 or len(utility_list)>=1000:
+    if node.visit_count<6 or len(utility_list)>=1000:
         return
     board_list.append(node.board)
     utility_list.append(node.score_estimate)
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # utility_list, the corresponding utility
     print(len(utility_list))
     
-    # check if the data set is normal case, should be a positive float number. 
+    # check if the data set is normal case, should be a float number between -10~10. 
     print(sum(utility_list)/ len(utility_list))
         
         
