@@ -34,6 +34,7 @@ class ConvNet(tr.nn.Module):
         
         # Defining Linear layer
         self.linear_layers = tr.nn.Sequential(
+            tr.nn.Linear(4, hid_features * (boardsize-1)**2),
             tr.nn.Linear(hid_features * (boardsize-1)**2, 1)
         )
 
@@ -94,7 +95,7 @@ if __name__ == "__main__":
 
     # Run the gradient descent iterations
     curves = [], []
-    for epoch in range(50000):
+    for epoch in range(200):
     
         # zero out the gradients for the next backward pass
         optimizer.zero_grad()
@@ -119,9 +120,9 @@ if __name__ == "__main__":
         curves[0].append(training_error)
         curves[1].append(testing_error)
         
-        # visualize learning curves on train/test data
-        pt.plot(curves[0], 'b-')
-        pt.plot(curves[1], 'r-')
-        pt.plot()
-        pt.legend(["Train","Test","Baseline"])
-        pt.show()
+    # visualize learning curves on train/test data
+    pt.plot(curves[0], 'b-')
+    pt.plot(curves[1], 'r-')
+    pt.plot()
+    pt.legend(["Train","Test","Baseline"])
+    pt.show()
