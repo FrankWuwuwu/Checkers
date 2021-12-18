@@ -9,11 +9,16 @@ Created on Fri Dec 17 05:04:16 2021
 import numpy as np
 import matplotlib.pyplot as pt
 import torch as tr
+import math
 
 class ConvNet(tr.nn.Module):   
     def __init__(self, inputlayer, boardsize, hid_features, kernel_size):
         super(ConvNet, self).__init__()
-
+        C_out_conv2d_1 = boardsize - kernel_size + 1
+        C_maxpool2d_1 = math.floor((C_out_conv2d_1 - kernel_size)/kernel_size) + 1
+        C_out_con2d_2 = C_maxpool2d_1 - kernel_size + 1
+        C_maxpool2d_2 = math.floor((C_out_con2d_2 - kernel_size)/kernel_size) + 1
+        
         self.cnn_layers = tr.nn.Sequential(
             # inputlayer should always be equal to 1, and output of linear layer should =1 since we only want the utility
              
@@ -34,7 +39,7 @@ class ConvNet(tr.nn.Module):
         
         # Defining Linear layer
         self.linear_layers = tr.nn.Sequential(
-            tr.nn.Linear(4, hid_features * (boardsize-1)**2),
+            tr.nn.Linear(C_maxpool2d_2**2*hid_features, hid_features * (boardsize-1)**2),
             tr.nn.Linear(hid_features * (boardsize-1)**2, 1)
         )
 
@@ -45,21 +50,6 @@ class ConvNet(tr.nn.Module):
         x = self.linear_layers(x)
         return x
 
-# # Define CNN
-# class ConvNet(tr.nn.Module):
-#     def __init__(self, size, hid_features):
-#         super(ConvNet, self).__init__()
-#         self.to_hidden = tr.nn.Conv2d(1, hid_features, 8)
-#         self.to_output = tr.nn.Linear(hid_features*(size-1)**2, 1)
-#     def forward(self, x):
-#         h = tr.relu(self.to_hidden(x))
-#         y = tr.tanh(self.to_output(h.reshape(x.shape[0],-1)))
-#         return y
-
-
-    
-
-
 # Calculates the error on a batch of training examples
 def batch_error(net, batch):
     states, utilities = batch
@@ -68,6 +58,7 @@ def batch_error(net, batch):
     # Meam square error
     e = tr.sum((y - u)**2) / utilities.shape[0]
     return e
+
 
 # Trains the network on some generated data
 if __name__ == "__main__":
@@ -95,7 +86,7 @@ if __name__ == "__main__":
 
     # Run the gradient descent iterations
     curves = [], []
-    for epoch in range(200):
+    for epoch in range(500):
     
         # zero out the gradients for the next backward pass
         optimizer.zero_grad()
@@ -120,9 +111,9 @@ if __name__ == "__main__":
         curves[0].append(training_error)
         curves[1].append(testing_error)
         
-    # visualize learning curves on train/test data
-    pt.plot(curves[0], 'b-')
-    pt.plot(curves[1], 'r-')
-    pt.plot()
-    pt.legend(["Train","Test","Baseline"])
-    pt.show()
+        # visualize learning curves on train/test data
+        pt.plot(curves[0], 'b-')
+        pt.plot(curves[1], 'r-')
+        pt.plot()
+        pt.legend(["Train","Test","Baseline"])
+        pt.show()
