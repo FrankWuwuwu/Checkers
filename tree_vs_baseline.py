@@ -3,7 +3,6 @@ import numpy as np
 from checker_helpers import *
 from checker_AI import *
 from MCTS import *
-# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 
@@ -25,7 +24,7 @@ def game(game_size):
             state = play_turn(action, board)
         else:
             print("--- Player 2's turn --->")
-            action,node_num = MCTS_AI(state,500)
+            action,node_num = MCTS_AI(state,200)
             node_count+=node_num
             state= play_turn(action, board)
     
@@ -97,7 +96,7 @@ if __name__ == "__main__":
     plt.xlabel('number_game')
     plt.ylabel('score')
 
-    plt.title('game of 8 * 8')
+    plt.title('game of 10 * 10')
     plt.savefig('1.jpg')
     plt.show()
 
@@ -109,6 +108,6 @@ if __name__ == "__main__":
     plt.xlabel('number_game')
     plt.ylabel('node_counts')
 
-    plt.title('game of 8 * 8')
+    plt.title('game of 10 * 10')
     plt.savefig('2.jpg')
     plt.show()

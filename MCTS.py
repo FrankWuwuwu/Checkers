@@ -52,6 +52,7 @@ def uct(node):
     U = Q + np.sqrt( np.log(node.visit_count + 1) / (N + 1))
     #print(node.children())
     return node.children()[np.argmax(U)]
+    
 
 # choose_child = exploit
 # choose_child = explore
@@ -106,6 +107,15 @@ def MCTS_AI(state,rolltime):
     #print(node.tree_player)
     
     return get_action(node), checknode(node)
+
+def node_tree(state,rolltime):
+    tree_player, board =state
+    node = Node((tree_player,(tree_player,board)))
+    for r in range(rolltime): 
+        rollout(node)
+        print("rollout time:",r)
+    
+    return node
 
 def checknode(node):
     num=len(node.child_list)
