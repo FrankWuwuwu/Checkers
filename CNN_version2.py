@@ -5,6 +5,8 @@ import matplotlib.pyplot as pt
 import torch as tr
 import math
 from data_generator import *
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 class ConvNet(tr.nn.Module):   
     def __init__(self, inputlayer, boardsize, hid_features, kernel_size):
@@ -60,13 +62,13 @@ if __name__ == "__main__":
 
 
     # Create CNN
-    net = ConvNet(inputlayer=1,boardsize=10,hid_features=4,kernel_size=3)
+    net = ConvNet(inputlayer=1,boardsize=10,hid_features=8,kernel_size=3)
     # in put board size and hidden features
     #net = ConvNet(size=8, hid_features=8)
     print(net)
     # Create Optimizer
     net = net.float()
-    optimizer = tr.optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
+    optimizer = tr.optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     # example/format of states and untilities  
     # states = [np.random.rand(1,8,8), np.random.rand(1,8,8)]
