@@ -1,8 +1,10 @@
 # Create CNN and train it in this script
+## Shuangding Zhu's configuration
 import numpy as np
 import matplotlib.pyplot as pt
 import torch as tr
 import math
+from data_generator import *
 
 class ConvNet(tr.nn.Module):   
     def __init__(self, inputlayer, boardsize, hid_features, kernel_size):
@@ -25,7 +27,7 @@ class ConvNet(tr.nn.Module):
         
         # Defining Linear layer
         self.linear_layers = tr.nn.Sequential(
-            tr.nn.Linear(C_maxpool2d_1**2*hid_features, 1),
+            tr.nn.LazyLinear(1),
         )
 
     # Defining the forward pass    
@@ -44,6 +46,12 @@ def batch_error(net, batch):
     e = tr.sum((y - u)**2) / utilities.shape[0]
     return e
 
+def get_baseline_error(batch):
+    states, utilities = batch
+    u = utilities.reshape(-1,1).float()
+    e = tr.sum((0 - u)**2) / utilities.shape[0]
+    return e
+
 
 # Trains the network on some generated data
 if __name__ == "__main__":
@@ -58,16 +66,25 @@ if __name__ == "__main__":
     net = net.float()
     optimizer = tr.optim.SGD(net.parameters(), lr=0.00001, momentum=0.9)
 
-    # example/format of states and untilities  
-    states = [np.random.rand(1,8,8), np.random.rand(1,8,8)]
-    utilities = [0,1]
+    # get test dataset
+    state_list, utilitie_list = get_traing_data()
+    states=[]
+    for item in state_list:
+        states.append(item.reshape(1,10,10))
+    states=np.array(states)
+    utilities=np.array(utilitie_list)
+    
     # Convert the states and their  utilities to tensors
 #    states, utilities = zip(*training_examples)
-    training_batch = tr.tensor(states), tr.tensor(utilities)
+    print(len(utilities),"training data.",len(utilities)/2, "as training data and rest for testing.")
+    slicer=int(len(utilities)/2)
+    training_batch = tr.tensor(states[:slicer]), tr.tensor(utilities[:slicer])
     print(training_batch)
 
-#    states, utilities = zip(*testing_examples)
-    testing_batch = tr.tensor(states), tr.tensor(utilities)
+    # testing_batch = tr.tensor(states), tr.tensor(utilities)
+    testing_batch = tr.tensor(states[slicer:]), tr.tensor(utilities[slicer:])
+    
+    baseline_error=get_baseline_error(testing_batch)
 
     # Run the gradient descent iterations
     curves = [], []
@@ -96,11 +113,15 @@ if __name__ == "__main__":
         curves[0].append(training_error)
         curves[1].append(testing_error)
         
-        # visualize learning curves on train/test data
-        pt.plot(curves[0], 'b-')
-        pt.plot(curves[1], 'r-')
-        pt.plot()
-        pt.legend(["Train","Test","Baseline"])
-        pt.show()
+    # visualize learning curves on train/test data
+    pt.plot(curves[0], 'b-')
+    pt.plot(curves[1], 'r-')
+    #pt.plot([0, len(curves[1])], [baseline_error, baseline_error], 'g-')
+    pt.plot()
+    pt.legend(["Train","Test","Baseline"])
+        
+    pt.savefig('CNN3.jpg')
+    pt.show()
+    tr.save(net.state_dict(),'model/CNN3.pkl')
 
 

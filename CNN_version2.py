@@ -20,17 +20,17 @@ class ConvNet(tr.nn.Module):
             # Change struture of CNN here: including boardsize, hid_features, kernal size
             
             # Defining a 2D convolution layer
-            tr.nn.Conv2d(inputlayer, hid_features, kernel_size),
-            tr.nn.MaxPool2d(kernel_size),
+            tr.nn.Conv2d(inputlayer, hid_features, kernel_size,padding=1),
+            tr.nn.MaxPool2d(kernel_size,padding=1),
             
             # Defining another 2D convolution layer
-            tr.nn.Conv2d(hid_features, hid_features, kernel_size),
-            tr.nn.MaxPool2d(kernel_size),
+            tr.nn.Conv2d(hid_features, hid_features, kernel_size,padding=1),
+            tr.nn.MaxPool2d(kernel_size,padding=1),
         )
         
         # Defining Linear layer
         self.linear_layers = tr.nn.Sequential(
-            tr.nn.Linear(C_maxpool2d_2**2*hid_features, 1)
+            tr.nn.LazyLinear(1)
         )
 
     # Defining the forward pass    
@@ -60,19 +60,20 @@ if __name__ == "__main__":
 
 
     # Create CNN
-    net = ConvNet(inputlayer=1,boardsize=10,hid_features=4,kernel_size=2)
+    net = ConvNet(inputlayer=1,boardsize=10,hid_features=4,kernel_size=3)
     # in put board size and hidden features
     #net = ConvNet(size=8, hid_features=8)
-    #print(net)
+    print(net)
     # Create Optimizer
     net = net.float()
     optimizer = tr.optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
 
     # example/format of states and untilities  
+    # states = [np.random.rand(1,8,8), np.random.rand(1,8,8)]
+    # utilities = [0,1]
     
+    # get test dataset
     state_list, utilitie_list = get_traing_data()
-    #states = [np.random.rand(1,8,8), np.random.rand(1,8,8)]
-    #utilities = [0,1]
     states=[]
     for item in state_list:
         states.append(item.reshape(1,10,10))
@@ -86,7 +87,7 @@ if __name__ == "__main__":
     training_batch = tr.tensor(states[:slicer]), tr.tensor(utilities[:slicer])
     print(training_batch)
 
-#    states, utilities = zip(*testing_examples)
+    # testing_batch = tr.tensor(states), tr.tensor(utilities)
     testing_batch = tr.tensor(states[slicer:]), tr.tensor(utilities[slicer:])
     
     baseline_error=get_baseline_error(testing_batch)
@@ -118,12 +119,12 @@ if __name__ == "__main__":
         curves[0].append(training_error)
         curves[1].append(testing_error)
         
-        # visualize learning curves on train/test data
-        pt.plot(curves[0], 'b-')
-        pt.plot(curves[1], 'r-')
-        #pt.plot([0, len(curves[1])], [baseline_error, baseline_error], 'g-')
-        pt.plot()
-        pt.legend(["Train","Test","Baseline"])
+    # visualize learning curves on train/test data
+    pt.plot(curves[0], 'b-')
+    pt.plot(curves[1], 'r-')
+    #pt.plot([0, len(curves[1])], [baseline_error, baseline_error], 'g-')
+    pt.plot()
+    pt.legend(["Train","Test","Baseline"])
         
     pt.savefig('CNN2.jpg')
     pt.show()
