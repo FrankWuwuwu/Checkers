@@ -21,7 +21,7 @@ def game(game_size):
             state = play_turn(action, board)
         else:
             print("--- Player 2's turn --->")
-            action,node_num = treeNN_AI(state,1)
+            action,node_num = treeNN_AI(state,10)
             node_count+=node_num
             state= play_turn(action, board)
     
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     plt.ylabel('score')
 
     plt.title('game of 10 * 10')
-    plt.savefig('1.jpg')
+    plt.savefig('treeNN_experiment.jpg')
     plt.show()
 
     x = np.linspace(1,100,100)
@@ -92,5 +92,5 @@ if __name__ == "__main__":
     plt.ylabel('node_counts')
 
     plt.title('game of 10 * 10')
-    plt.savefig('2.jpg')
+    plt.savefig('treeNN_experiment_node.jpg')
     plt.show()

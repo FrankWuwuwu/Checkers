@@ -56,7 +56,7 @@ def uct(node):
     return node.children()[np.argmax(U)]
     
 def CNN(node):
-    model = ConvNet(inputlayer=1,boardsize=10,hid_features=4,kernel_size=2)
+    model = ConvNet(inputlayer=1,boardsize=10,hid_features=8,kernel_size=3)
     model.load_state_dict(tr.load("model/CNN2.pkl"))
     state_list=[]
     for child in node.children():
@@ -75,7 +75,7 @@ choose_child = CNN
 
 # decide the best action of current node base on UCT
 def decide_action(node):
-    model = ConvNet(inputlayer=1,boardsize=10,hid_features=4,kernel_size=2)
+    model = ConvNet(inputlayer=1,boardsize=10,hid_features=8,kernel_size=3)
     model.load_state_dict(tr.load("model/CNN2.pkl"))
     state_list=[]
     for child in node.children():
