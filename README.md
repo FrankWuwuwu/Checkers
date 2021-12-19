@@ -77,3 +77,15 @@ python treeNN_vs_baseline.py
 ```
 Two graph will also produced by this script.
 In this script, we set the board size to be 10*10. You can edit the board size and rollout in the code for further experiment.
+
+# Other files
+
+MCTS.py -- code of tree-based AI
+
+TreeNN.py -- code of CNN integrated tree AI
+
+data_generator.py -- method to generate training data for our neural network
+
+CNN_version1/2/3.py -- code of three kind of CNN configuration we tried. **Input: 1*8*8 array of game states. Output: utilities**
+
+checker_AI.py -- code of baseline AI
