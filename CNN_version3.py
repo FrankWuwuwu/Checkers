@@ -5,6 +5,8 @@ import matplotlib.pyplot as pt
 import torch as tr
 import math
 from data_generator import *
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 class ConvNet(tr.nn.Module):   
     def __init__(self, inputlayer, boardsize, hid_features, kernel_size):
@@ -58,7 +60,7 @@ if __name__ == "__main__":
 
 
     # Create CNN
-    net = ConvNet(inputlayer=1,boardsize=8,hid_features=4,kernel_size=2)
+    net = ConvNet(inputlayer=1,boardsize=10,hid_features=4,kernel_size=2)
     # in put board size and hidden features
     #net = ConvNet(size=8, hid_features=8)
     #print(net)
