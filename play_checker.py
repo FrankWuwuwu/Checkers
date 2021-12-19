@@ -1,6 +1,8 @@
+####code by Kefu Wu
 from checker_helpers import *
 from checker_AI import *
 from MCTS import *
+from TreeNN import *
 
 def get_user_action(state):
     actions = valid_actions(state)
@@ -50,6 +52,9 @@ if __name__ == "__main__":
             print("4. Tree+NN AI")
             choice = int(input("You choice:"))
             if choice in range(1,5):
+                if choice==4 and question!=10:
+                    print("We currently only trained tree+NN AI for 10*10 game")
+                    continue
                 break
             else:
                 print("no this choice")
@@ -67,6 +72,9 @@ if __name__ == "__main__":
             print("4. Tree+NN AI")
             choice = int(input("You choice:"))
             if choice in range(1,5):
+                if choice==4 and question!=10:
+                    print("We currently only trained tree+NN AI for 10*10 game")
+                    continue
                 break
             else:
                 print("no this choice")
@@ -88,7 +96,7 @@ if __name__ == "__main__":
             elif (player_1==3):
                 action,_ = MCTS_AI(state,500)
             elif (player_1==4):
-                action = simple_AI(state)# replace here
+                action,_ = treeNN_AI(state,10)
             else:
                 print("player error")
                 exit()
@@ -102,7 +110,7 @@ if __name__ == "__main__":
             elif (player_2==3):
                 action,_ = MCTS_AI(state,500)
             elif (player_2==4):
-                action = simple_AI(state)# replace here
+                action,_ = treeNN_AI(state,10)
             else:
                 print("player error")
                 exit()

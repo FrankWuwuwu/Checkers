@@ -22,7 +22,7 @@ def get_traing_data():
     board_list=[]
     utility_list=[]
     
-    node=node_tree(state,1000)
+    node=node_tree(state,10000)
     get_child(node,board_list,utility_list)
     
     # board_list, 10*10 list, need to change to 1*10*10
