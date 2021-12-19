@@ -86,6 +86,7 @@ TreeNN.py -- code of CNN integrated tree AI
 
 data_generator.py -- method to generate training data for our neural network
 
-CNN_version1/2/3.py -- code of three kind of CNN configuration we tried. **Input: 1*8*8 array of game states. Output: utilities**
+CNN_version1/2/3.py -- code of three kind of CNN configuration we tried.
+**Input: 1*8*8 array of game states. Output: utilities**
 
 checker_AI.py -- code of baseline AI
