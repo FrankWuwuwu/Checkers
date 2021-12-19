@@ -61,7 +61,7 @@ if __name__ == "__main__":
         player2_score.append(player2_counter)
         node.append(node_count)
 
-        print(node_count, "nodes produced by MCTS")
+        print(node_count, "nodes produced by MCTS+NN")
     print("100 game finished")
     print("player 1 wins",player1_counter,"game")
     print("player 2 wins",player2_counter,"game")
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     x1 = np.linspace(1,199,100)
     x2 = np.linspace(2,200,100)
     plt.bar(x1, np.array(player1_score), label='baseline')
-    plt.bar(x2, np.array(player2_score), label='tree-based')
+    plt.bar(x2, np.array(player2_score), label='tree+NN')
 
     # plt.xlim((1,100))
 
