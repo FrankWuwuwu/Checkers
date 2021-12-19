@@ -5,6 +5,8 @@ import matplotlib.pyplot as pt
 import torch as tr
 import math
 from data_generator import *
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 class ConvNet(tr.nn.Module):   
     def __init__(self, inputlayer, boardsize, hid_features, kernel_size):
