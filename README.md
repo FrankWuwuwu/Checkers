@@ -35,7 +35,7 @@ https://pytorch.org/get-started/locally/
 
 
 # How to run the game
-The code of the is created by us and is completely original.
+The code of the game is created by us and is completely original.
 To start with, use following code to clone and enter the project.
 ```
 git clone https://github.com/FrankWuwuwu/Checkers
